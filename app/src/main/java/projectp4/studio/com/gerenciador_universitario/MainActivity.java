@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         banco = openOrCreateDatabase("Gerenciador_universitario", MODE_PRIVATE, null);
 
-        banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE, conceito TEXT, nivelDeFaltas TEXT)");
+        banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE, conceito VARCHAR, nivelDeFaltas VARCHAR)");
 
         bundle.putStringArrayList("materias", idb.recuperarInfo(banco));
         bundle.putIntegerArrayList("ids", idb.getIds());
@@ -116,9 +116,10 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         banco = openOrCreateDatabase("Gerenciador_universitario", MODE_PRIVATE, null);
-                        banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE)");
 
-                        banco.execSQL("INSERT INTO materias (nome, cargaHoraria, maxFaltas, faltas) VALUES (" + toAdd + ",0)");
+                        banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE, conceito VARCHAR, nivelDeFaltas VARCHAR)");
+
+                        banco.execSQL("INSERT INTO materias (nome, cargaHoraria, maxFaltas, faltas, conceito, nivelDeFaltas) VALUES (" + toAdd + ",0, 'Matriculado', 'ACEITÁVEL')");
 
                         bundle.putStringArrayList("materias", idb.recuperarInfo(banco));
                         bundle.putIntegerArrayList("ids", idb.getIds());
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Toast.makeText(MainActivity.this, "Matéria Adicionada!", Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(MainActivity.this, "Erro ao adicionar", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                 }

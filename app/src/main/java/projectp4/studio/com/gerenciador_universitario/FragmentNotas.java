@@ -17,7 +17,6 @@ public class FragmentNotas extends Fragment {
 
     private Button ranking;
     private Button addNotas;
-    private Button verNotas;
 
 
     public FragmentNotas() {
@@ -33,7 +32,6 @@ public class FragmentNotas extends Fragment {
 
         ranking = (Button) view.findViewById(R.id.ranking);
         addNotas = (Button) view.findViewById(R.id.AddNotas);
-        verNotas = (Button) view.findViewById(R.id.verNotas);
 
         ranking.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -47,14 +45,6 @@ public class FragmentNotas extends Fragment {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(getActivity(), AddNotas.class);
-                startActivity(intent);
-            }
-        });
-
-        verNotas.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getActivity(), VerNotas.class);
                 startActivity(intent);
             }
         });

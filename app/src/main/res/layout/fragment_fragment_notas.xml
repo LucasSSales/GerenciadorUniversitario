@@ -20,16 +20,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="left|bottom">
 
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Ver Boletim"
-            android:id="@+id/verNotas"
-            android:layout_below="@+id/textView8"
-            android:layout_alignRight="@+id/textView8"
-            android:layout_alignEnd="@+id/textView8"
-            android:layout_marginTop="57dp" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,17 +37,16 @@
             android:layout_height="wrap_content"
             android:text="Adicionar Notas"
             android:id="@+id/AddNotas"
-            android:layout_alignTop="@+id/verNotas"
-            android:layout_alignLeft="@+id/textView8"
-            android:layout_alignStart="@+id/textView8" />
+            android:layout_below="@+id/textView8"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="53dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ranking de Prioridades"
             android:id="@+id/ranking"
-            android:layout_marginTop="32dp"
-            android:layout_below="@+id/verNotas"
+            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>

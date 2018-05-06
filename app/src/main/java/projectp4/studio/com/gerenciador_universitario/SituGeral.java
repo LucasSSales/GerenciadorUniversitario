@@ -26,6 +26,8 @@ public class SituGeral extends AppCompatActivity {
     private TextView faltasR;
     private TextView cargaH;
     private TextView media;
+    private TextView conceito;
+    private TextView statusF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +44,21 @@ public class SituGeral extends AppCompatActivity {
         faltasR = (TextView) findViewById(R.id.tvFaltasR);
         cargaH = (TextView) findViewById(R.id.tvCh);
         media = (TextView) findViewById(R.id.tvMedia);
+        conceito = (TextView) findViewById(R.id.tvConceito);
+        statusF = (TextView) findViewById(R.id.tvStatusF);
 
         Bundle extra = getIntent().getExtras();
         banco = openOrCreateDatabase("Gerenciador_universitario", MODE_PRIVATE, null);
-        banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE)");
+
+        banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE, conceito VARCHAR, nivelDeFaltas VARCHAR)");
+
         idb = new InfosDB(SituGeral.this);
 
         if(extra != null){
             Integer idMat = extra.getInt("ID");
             ArrayList<String> nomes = idb.recuperarInfo(banco);
 
-            nomeMat.setText(nomes.get(idMat-1));
+            nomeMat.setText(nomes.get(idb.getIds().indexOf(idMat)));
 
             Double ab1 = idb.getAb1().get(idb.getIds().indexOf(idMat));
             Double ab2 = idb.getAb2().get(idb.getIds().indexOf(idMat));
@@ -68,6 +74,9 @@ public class SituGeral extends AppCompatActivity {
             String ch = idb.getCargaH().get(idb.getIds().indexOf(idMat));
             Double m = idb.getMediaFinal().get(idb.getIds().indexOf(idMat));
 
+            String c = idb.getConceitos().get(idb.getIds().indexOf(idMat));
+            String nf = idb.getNvlsFaltas().get(idb.getIds().indexOf(idMat));
+
 
             reavtv.setText("Reav: " + reav );
             ab1tv.setText("AB1: " + ab1);
@@ -77,6 +86,8 @@ public class SituGeral extends AppCompatActivity {
             faltasR.setText("Faltas Restantes: " + fr);
             cargaH.setText("Carga Horária: " + ch +"h");
             media.setText("Média: " + m);
+            conceito.setText("Conceito: " + c);
+            statusF.setText("Nível de Faltas: " +nf);
 
         }
     }

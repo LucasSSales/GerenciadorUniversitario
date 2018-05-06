@@ -29,19 +29,9 @@
             android:layout_height="wrap_content"
             android:text="Adicionar Faltas"
             android:id="@+id/addFaltas"
+            android:layout_marginTop="50dp"
             android:layout_below="@+id/textView8"
-            android:layout_alignLeft="@+id/textView8"
-            android:layout_alignStart="@+id/textView8"
-            android:layout_marginTop="44dp" />
-
-        <Button
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:text="SItuação Atual"
-            android:id="@+id/situAtual"
-            android:layout_alignTop="@+id/addFaltas"
-            android:layout_alignRight="@+id/textView8"
-            android:layout_alignEnd="@+id/textView8" />
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 </FrameLayout>

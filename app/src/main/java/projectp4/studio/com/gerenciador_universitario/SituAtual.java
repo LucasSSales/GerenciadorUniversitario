@@ -33,8 +33,6 @@ public class SituAtual extends AppCompatActivity {
 
                 teste.setText("Vc selecionou " + niveisF[i]);
 
-
-
             }
 
             @Override

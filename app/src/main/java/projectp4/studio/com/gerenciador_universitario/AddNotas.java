@@ -43,7 +43,7 @@ public class AddNotas extends AppCompatActivity {
         try {
             banco = openOrCreateDatabase("Gerenciador_universitario", MODE_PRIVATE, null);
 
-            banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE, conceito TEXT, nivelDeFaltas TEXT)");
+            banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE, conceito VARCHAR, nivelDeFaltas VARCHAR)");
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, idb.recuperarInfo(banco));
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -84,6 +84,7 @@ public class AddNotas extends AppCompatActivity {
                         Toast.makeText(AddNotas.this, "Digite uma nota!", Toast.LENGTH_LONG).show();
                     }else{
                         Double n = Double.parseDouble(nota.getText().toString());
+                        boolean f = false;
 
                         if(n > 10 || n < 0){
                             Toast.makeText(AddNotas.this, "Notas de 0 a 10 apenas!", Toast.LENGTH_LONG).show();
@@ -101,6 +102,7 @@ public class AddNotas extends AppCompatActivity {
                                     break;
                                 case 3:
                                     banco.execSQL("UPDATE materias SET provaFinal="+ n +" WHERE id=" + id);
+                                    f = true;
                                     break;
                             }
 
@@ -114,9 +116,16 @@ public class AddNotas extends AppCompatActivity {
                             notas.add(idb.getProvaFinal().get(idb.getIds().indexOf(id)));
 
                             banco.execSQL("UPDATE materias SET mediaFinal="+ c.media(posAv, notas) +" WHERE id=" + id);
+                            /*
+                            String con = c.conceito(c.media(posAv, notas), posAv, true);//MUDAR
+
+                            banco.execSQL("UPDATE materias SET conceito='"+ con +"' WHERE id=" + id);
+
+                            idb.recuperarInfo(banco);
+                            Toast.makeText(AddNotas.this, "conceito: "+idb.getConceitos().get(idb.getIds().indexOf(id)), Toast.LENGTH_SHORT).show();
 
                             Toast.makeText(AddNotas.this, "Nota adicionada!", Toast.LENGTH_LONG).show();
-                            //finish();
+                            //finish();*/
                         }
                     }
 

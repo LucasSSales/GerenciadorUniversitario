@@ -36,14 +36,8 @@ public class Ranking extends AppCompatActivity {
 
         adapter = new ArrayAdapter<String>(Ranking.this, R.layout.support_simple_spinner_dropdown_item, idb.Ranking());
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        //adapter.notifyDataSetChanged(); NOP
 
         rk.setAdapter(adapter);
-
-        //c.ranking(idb.getMat(), idb.getIds(), idb.idsOrdenadas(banco)); NOP
-
-
-
 
     }
 }

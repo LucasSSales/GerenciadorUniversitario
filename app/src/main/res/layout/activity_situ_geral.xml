@@ -27,11 +27,11 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/ab1"
-        android:layout_above="@+id/Dados"
+        android:text="AB1: 00.00"
+        android:layout_below="@+id/tvCh"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="97dp"
-        android:text="AB1: 00.00" />
+        android:layout_marginTop="45dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -59,10 +59,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Reavaliação: 00.00"
         android:id="@+id/reav"
-        android:layout_above="@+id/Dados"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/ab1"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="35dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,9 +81,8 @@
         android:text="Faltas Atuais: 000"
         android:id="@+id/tvFaltasA"
         android:layout_below="@+id/Dados"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="38dp" />
+        android:layout_alignLeft="@+id/tvMedia"
+        android:layout_alignStart="@+id/tvMedia" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -91,10 +90,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Faltas restantes: 000"
         android:id="@+id/tvFaltasR"
+        android:layout_marginTop="36dp"
         android:layout_below="@+id/tvFaltasA"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -111,21 +109,19 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="CONCEITO: Matriculado"
         android:id="@+id/tvConceito"
+        android:layout_marginTop="38dp"
         android:layout_below="@+id/tvStatusF"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="32dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Status de Faltas: "
+        android:text="Status de Faltas: Aceitável"
         android:id="@+id/tvStatusF"
+        android:layout_marginTop="35dp"
         android:layout_below="@+id/tvFaltasR"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -133,9 +129,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Média: 00.00"
         android:id="@+id/tvMedia"
-        android:layout_above="@+id/tvFaltasA"
-        android:layout_toRightOf="@+id/ab1"
-        android:layout_toEndOf="@+id/ab1" />
+        android:layout_below="@+id/reav"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:textSize="30dp" />
 
 </RelativeLayout>
 </ScrollView>

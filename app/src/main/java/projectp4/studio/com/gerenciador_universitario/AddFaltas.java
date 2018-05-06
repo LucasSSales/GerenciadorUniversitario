@@ -34,6 +34,7 @@ public class AddFaltas extends AppCompatActivity {
     private Integer id;
     private AlertDialog.Builder dialog;
     private NotificationCompat.Builder notification;
+    private Calculos c = new Calculos(AddFaltas.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class AddFaltas extends AppCompatActivity {
         try {
             banco = openOrCreateDatabase("Gerenciador_universitario", MODE_PRIVATE, null);
 
-            banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE, conceito TEXT, nivelDeFaltas TEXT)");
+            banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE, conceito VARCHAR, nivelDeFaltas VARCHAR)");
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, idb.recuperarInfo(banco));
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -82,8 +83,18 @@ public class AddFaltas extends AppCompatActivity {
                     dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            String ast = c.calcStatus(Integer.parseInt(idb.getFaltasA().get(posMat)), Integer.parseInt(idb.getFaltasMax().get(posMat)));
+
                             updateFaltas(id, idb.getFaltasA().get(posMat));
-/*
+
+                            String st = c.calcStatus(Integer.parseInt(idb.getFaltasA().get(posMat)), Integer.parseInt(idb.getFaltasMax().get(posMat)));
+
+                            if(!ast.equals(st))
+                                notificar(st, posMat);
+
+                            banco.execSQL("UPDATE materias SET nivelDeFaltas='"+ st +"' WHERE id=" + idb.getIds().get(posMat));
+                            //Toast.makeText(AddFaltas.this, "Status: "+idb.getConceitos().get(posMat), Toast.LENGTH_SHORT).show();
+                            /*
                                 String prevStatus = s.calcStatus(Integer.parseInt(idb.getFaltasA().get(position)), Integer.parseInt(idb.getFaltasMax().get(position)));
                                 updateFaltas(idb.getIds().get(position), idb.getFaltasA().get(position));
                                 String newStatus = s.calcStatus(Integer.parseInt(idb.getFaltasA().get(position)), Integer.parseInt(idb.getFaltasMax().get(position)));
@@ -147,13 +158,9 @@ public class AddFaltas extends AppCompatActivity {
             toque.play();
         }catch(Exception e){}
 
-        ArrayList<String> extra = new ArrayList<String>();
-        extra.add(idb.getMat().get(position));
-        extra.add(idb.getFaltasA().get(position));
-        extra.add(idb.getFaltasMax().get(position));
 
         Intent i = new Intent(AddFaltas.this, SituGeral.class);
-        i.putExtra("Dados", extra);
+        i.putExtra("ID", idb.getIds().get(position));
 
         PendingIntent pi = PendingIntent.getActivity(AddFaltas.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         notification.setContentIntent(pi);

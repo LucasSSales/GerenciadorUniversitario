@@ -32,6 +32,8 @@ public class InfosDB extends Activity {
     private ArrayList<String> faltasA;
     private ArrayList<String> faltasMax;
     private ArrayList<String> cargaH;
+    private ArrayList<String> conceitos;
+    private ArrayList<String> nvlsFaltas;
 
     public InfosDB (Context context){
         this.context = context;
@@ -83,7 +85,7 @@ public class InfosDB extends Activity {
 
     public  ArrayList<String> recuperarInfo(SQLiteDatabase banco){
         try{
-            cursor = banco.rawQuery("SELECT id, nome,faltas,maxFaltas,cargaHoraria, ab1, ab2, reav, provaFinal, mediaFinal  FROM materias", null);
+            cursor = banco.rawQuery("SELECT id, nome,faltas,maxFaltas,cargaHoraria, ab1, ab2, reav, provaFinal, mediaFinal, conceito, nivelDeFaltas  FROM materias", null);
 
             int indexNome = cursor.getColumnIndex("nome");
             int indexId = cursor.getColumnIndex("id");
@@ -95,6 +97,8 @@ public class InfosDB extends Activity {
             int indexprovaFinal = cursor.getColumnIndex("provaFinal");
             int indexmediaFinal = cursor.getColumnIndex("mediaFinal");
             int indexCargaH = cursor.getColumnIndex("cargaHoraria");
+            int indexConceito = cursor.getColumnIndex("conceito");
+            int indexNvlF = cursor.getColumnIndex("nivelDeFaltas");
             cursor.moveToFirst();
             //Adapter
             mat = new ArrayList<String>();
@@ -107,6 +111,8 @@ public class InfosDB extends Activity {
             provaFinal = new ArrayList<Double>();
             mediaFinal = new ArrayList<Double>();
             cargaH = new ArrayList<String>();
+            conceitos = new ArrayList<String>();
+            nvlsFaltas = new ArrayList<String>();
 
             listaMaterias = new ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, mat);
             listaMaterias.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -122,6 +128,8 @@ public class InfosDB extends Activity {
                 provaFinal.add(cursor.getDouble(indexprovaFinal));
                 mediaFinal.add(cursor.getDouble(indexmediaFinal));
                 cargaH.add(cursor.getString(indexCargaH));
+                conceitos.add(cursor.getString(indexConceito));
+                nvlsFaltas.add(cursor.getString(indexNvlF));
                 cursor.moveToNext();
             }
         }catch(Exception e){}
@@ -155,57 +163,24 @@ public class InfosDB extends Activity {
         }
     }
 
-    public void removerMateria(SQLiteDatabase banco, Integer id){
-        //Toast.makeText(getContext(), "j", Toast.LENGTH_LONG).show();
+    public SQLiteDatabase pegarBanco (String nome, Context context){
+        SQLiteDatabase banco = context.openOrCreateDatabase(nome, Context.MODE_PRIVATE, null);
+        banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, " +
+                "cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, " +
+                "reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE)");
+        return banco;
+    }
+
+    public void removerMateria(SQLiteDatabase banco, Context c, Integer id){
         try{
-            Toast.makeText(getContext(), "KK eae men", Toast.LENGTH_LONG).show();
-            //banco.execSQL("DELETE FROM materias WHERE id=" + id);
-            //Toast.makeText(getContext(), "Materia Excluida", Toast.LENGTH_LONG).show();
+            banco.execSQL("DELETE FROM materias WHERE id=" + id);
+            Toast.makeText(c, "Materia Excluida", Toast.LENGTH_LONG).show();
         }catch(Exception e){
-            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(c, e.toString(),  Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
 
-    public void updateAb1 (SQLiteDatabase banco, double f, ListView listaMat, Integer id){
-        try{
-            banco.execSQL("UPDATE materias SET ab1="+ f +" WHERE id=" + id);
-            Toast.makeText(context, "Falta adicionada!", Toast.LENGTH_LONG).show();
-            recuperarInfoList(banco, listaMat);
-
-        }catch(Exception e){
-            e.printStackTrace();;
-        }
-    }
-    public void updateAb2 (SQLiteDatabase banco, double f, ListView listaMat, Integer id){
-        try{
-            banco.execSQL("UPDATE materias SET ab2="+ f +" WHERE id=" + id);
-            Toast.makeText(context, "Falta adicionada!", Toast.LENGTH_LONG).show();
-            recuperarInfoList(banco, listaMat);
-
-        }catch(Exception e){
-            e.printStackTrace();;
-        }
-    }
-    public void updateReav (SQLiteDatabase banco, double f, ListView listaMat, Integer id){
-        try{
-            banco.execSQL("UPDATE materias SET reav="+ f +" WHERE id=" + id);
-            Toast.makeText(context, "Falta adicionada!", Toast.LENGTH_LONG).show();
-            recuperarInfoList(banco, listaMat);
-
-        }catch(Exception e){
-            e.printStackTrace();;
-        }
-    }
-    public void updateProvaFinal (SQLiteDatabase banco, double f, Integer id){
-        try{
-            banco.execSQL("UPDATE materias SET provaFinal="+ f +" WHERE id=" + id);
-            Toast.makeText(context, "Falta adicionada!", Toast.LENGTH_LONG).show();
-
-        }catch(Exception e){
-            e.printStackTrace();;
-        }
-    }
 
     public String[] Ranking (){
         String[] mats = new String[getMat().size()];
@@ -235,8 +210,6 @@ public class InfosDB extends Activity {
         return mats;
 
     }
-
-
 
     public Context getContext() {
         return context;
@@ -290,6 +263,14 @@ public class InfosDB extends Activity {
 
     public ArrayList<String> getCargaH() {
         return cargaH;
+    }
+
+    public ArrayList<String> getConceitos() {
+        return conceitos;
+    }
+
+    public ArrayList<String> getNvlsFaltas() {
+        return nvlsFaltas;
     }
 
 }

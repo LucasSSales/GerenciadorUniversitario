@@ -45,11 +45,12 @@ public class Calculos extends Activity{
         if(av == 0 || av == 1){
             return mediaA;
         }else{
-            if(notas.get(0) < notas.get(1))
-                mediaA = (notas.get(1) + notas.get(2))/2;
-            else
-                mediaA = (notas.get(0) + notas.get(2))/2;
-
+            if((notas.get(2) > notas.get(0)) || (notas.get(2) > notas.get(1))){
+                if(notas.get(0) < notas.get(1))
+                    mediaA = (notas.get(1) + notas.get(2))/2;
+                else
+                    mediaA = (notas.get(0) + notas.get(2))/2;
+            }
             if(av == 2)
                 return mediaA;
             else
@@ -57,14 +58,17 @@ public class Calculos extends Activity{
         }
     }
 
-    public String conceito (double media, boolean f, boolean cb){
+    public String conceito (double media, int av, boolean cb){
 
-        String saida;
+        String saida="Matriculado";
         if(media >= 7){
+            Toast.makeText(Calculos.this, "maior q 7", Toast.LENGTH_SHORT).show();
             saida = "Aprovado";
-        }else if (media >= 5.5 && f){
+        }else if (media >= 5.5 && av==3){
+            Toast.makeText(Calculos.this, "mais q 5.5 na final", Toast.LENGTH_SHORT).show();
             saida = "Aprovado";
-        }else if(media < 5.5 || (media < 7 && f)){
+        }else if( (media < 5 && av > 0) || (media < 5.5 && av==3)){
+            Toast.makeText(Calculos.this, "menos q 5 ou  menos 1 5.5 na final", Toast.LENGTH_SHORT).show();
             saida = "Reprovado";
         }
 
@@ -72,7 +76,7 @@ public class Calculos extends Activity{
 
         }*/
 
-        return "";
+        return saida;
 
     }
 
