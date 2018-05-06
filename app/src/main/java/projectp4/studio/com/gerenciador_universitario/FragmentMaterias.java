@@ -37,7 +37,6 @@ public class FragmentMaterias extends Fragment {
     private ArrayList<Integer> ids;
     private AlertDialog.Builder dialog;
     private ArrayAdapter<String> listaMaterias;
-    public int delete;
 
     public FragmentMaterias() {
         // Required empty public constructor
