@@ -109,7 +109,7 @@ public class AddNotas extends AppCompatActivity {
                                     banco.execSQL("UPDATE materias SET reav="+ n +" WHERE id=" + id);
                                     break;
                                 case 3:
-                                    banco.execSQL("UPDATE conceito SET provaFinal="+ n +" WHERE id=" + id);
+                                    banco.execSQL("UPDATE materias SET provaFinal="+ n +" WHERE id=" + id);
                                     break;
                             }
 
@@ -121,6 +121,8 @@ public class AddNotas extends AppCompatActivity {
                             notas.add(idb.getAb2().get(idb.getIds().indexOf(id)));
                             notas.add(idb.getReav().get(idb.getIds().indexOf(id)));
                             notas.add(idb.getProvaFinal().get(idb.getIds().indexOf(id)));
+
+                            //Toast.makeText(AddNotas.this, "Nota adicionada!!", Toast.LENGTH_LONG).show();
 
                             String con = c.conceito(c.media(posAv, notas), posAv);
 

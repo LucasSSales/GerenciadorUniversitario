@@ -55,6 +55,7 @@ public class Calculos extends Activity{
                 return mediaA;
             else
                 return mediaA*0.6 + notas.get(3) * 0.4;
+
         }
     }
 
