@@ -37,7 +37,6 @@ public class FragmentMaterias extends Fragment {
     private ArrayList<Integer> ids;
     private AlertDialog.Builder dialog;
     private ArrayAdapter<String> listaMaterias;
-    public int delete;
 
     public FragmentMaterias() {
         // Required empty public constructor
@@ -103,7 +102,10 @@ public class FragmentMaterias extends Fragment {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             idb.removerMateria(idb.pegarBanco("Gerenciador_universitario", getActivity()), getActivity(), ids.get(position) );
                             args.remove(position);
+
                             listaMaterias.notifyDataSetChanged();
+                            startActivity(new Intent(getActivity(), MainActivity.class));
+                            getActivity().finish();
                         }
                     });
                     dialog.create();

@@ -147,13 +147,8 @@ public class InfosDB extends Activity {
     }
 
     public void removerMateria(SQLiteDatabase banco, Context c, Integer id){
-        try{
             banco.execSQL("DELETE FROM materias WHERE id=" + id);
             Toast.makeText(c, "Materia Excluida!", Toast.LENGTH_LONG).show();
-        }catch(Exception e){
-            Toast.makeText(c, e.toString(),  Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
     }
 
 

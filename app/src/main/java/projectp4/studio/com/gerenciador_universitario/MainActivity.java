@@ -109,7 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if(m.equals("") || c.equals("")){
                     Toast.makeText(MainActivity.this, "Por favor, preencha todos os campos!", Toast.LENGTH_LONG).show();
-                }else {
+                }else if (Integer.parseInt(c) == 0){
+                    Toast.makeText(MainActivity.this, "Carga Horária Inválida!", Toast.LENGTH_SHORT).show();
+                }                else {
                     Double maxFaltas = Integer.parseInt(c)*0.25;
                     int mf = maxFaltas.intValue();
                     String toAdd = "'" + m + "'," + c + "," + mf;
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
                         bundle.putStringArrayList("materias", idb.recuperarInfo(banco));
                         bundle.putIntegerArrayList("ids", idb.getIds());
+
 
                         TabAdapter tba = new TabAdapter( getSupportFragmentManager(), bundle );
                         vp.setAdapter( tba );

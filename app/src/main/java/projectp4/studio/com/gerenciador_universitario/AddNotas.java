@@ -89,7 +89,9 @@ public class AddNotas extends AppCompatActivity {
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(nota.getText().toString().equals("")){
+                    if(idb.getMat().isEmpty()){
+                        Toast.makeText(AddNotas.this, "Não há matérias cadastradas!", Toast.LENGTH_SHORT).show();
+                    }else if(nota.getText().toString().equals("")){
                         Toast.makeText(AddNotas.this, "Digite uma nota!", Toast.LENGTH_LONG).show();
                     }else{
                         Double n = Double.parseDouble(nota.getText().toString());

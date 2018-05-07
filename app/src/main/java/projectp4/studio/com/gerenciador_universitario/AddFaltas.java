@@ -83,17 +83,21 @@ public class AddFaltas extends AppCompatActivity {
                     dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            String ast = c.calcStatus(Integer.parseInt(idb.getFaltasA().get(posMat)), Integer.parseInt(idb.getFaltasMax().get(posMat)));
+                            if(idb.getMat().isEmpty()){
+                                Toast.makeText(AddFaltas.this, "Não há matérias cadastradas!", Toast.LENGTH_SHORT).show();
+                            }else{
+                                    String ast = c.calcStatus(Integer.parseInt(idb.getFaltasA().get(posMat)), Integer.parseInt(idb.getFaltasMax().get(posMat)));
 
-                            updateFaltas(id, idb.getFaltasA().get(posMat));
+                                    updateFaltas(id, idb.getFaltasA().get(posMat));
 
-                            String st = c.calcStatus(Integer.parseInt(idb.getFaltasA().get(posMat)), Integer.parseInt(idb.getFaltasMax().get(posMat)));
+                                    String st = c.calcStatus(Integer.parseInt(idb.getFaltasA().get(posMat)), Integer.parseInt(idb.getFaltasMax().get(posMat)));
 
-                            if(!ast.equals(st))
-                                notificar(st, posMat);
+                                    if(!ast.equals(st))
+                                        notificar(st, posMat);
 
-                            banco.execSQL("UPDATE materias SET nivelDeFaltas='"+ st +"' WHERE id=" + idb.getIds().get(posMat));
+                                    banco.execSQL("UPDATE materias SET nivelDeFaltas='"+ st +"' WHERE id=" + idb.getIds().get(posMat));
 
+                                }
                             }
                     });
                     dialog.create();

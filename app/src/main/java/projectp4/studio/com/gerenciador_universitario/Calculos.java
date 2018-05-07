@@ -61,6 +61,9 @@ public class Calculos extends Activity{
 
     public String conceito (double media, int av){
 
+        if(av==3 && media < 5)
+            return "Matriculado";
+
         if(media >= 7) return  "Aprovado";
         if(media < 5 && av > 1) return "Reprovado";//
 
