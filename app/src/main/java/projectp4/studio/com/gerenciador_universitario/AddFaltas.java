@@ -119,6 +119,10 @@ public class AddFaltas extends AppCompatActivity {
 
     public void notificar(String status, int position){
 
+        String msg = "Tenha mais cautela!";
+        if(status.equals("LIMITE ULTRAPASSADO!"))
+            msg = "É uma pena!";
+
         notification = new NotificationCompat.Builder(AddFaltas.this);
         notification.setAutoCancel(true);
         notification.setSmallIcon(R.drawable.faltas);
@@ -126,7 +130,7 @@ public class AddFaltas extends AppCompatActivity {
         notification.setTicker("Nível de Faltas " + status + "!");
         notification.setWhen(System.currentTimeMillis());
         notification.setContentTitle("Nível de Faltas " + status + "!");
-        notification.setContentText("Clique para ver o status da matéria");
+        notification.setContentText(msg);
         int id = (int) System.currentTimeMillis();
         notification.setVibrate(new long[] {150, 800});
 
@@ -136,12 +140,6 @@ public class AddFaltas extends AppCompatActivity {
             toque.play();
         }catch(Exception e){}
 
-
-        Intent i = new Intent(AddFaltas.this, SituGeral.class);
-        i.putExtra("ID", idb.getIds().get(position));
-
-        PendingIntent pi = PendingIntent.getActivity(AddFaltas.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-        notification.setContentIntent(pi);
 
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         nm.notify(id, notification.build());

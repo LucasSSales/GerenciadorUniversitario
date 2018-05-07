@@ -182,13 +182,6 @@ public class AddNotas extends AppCompatActivity {
             toque.play();
         }catch(Exception e){}
 
-
-        Intent i = new Intent(AddNotas.this, SituGeral.class);
-        i.putExtra("ID", idb.getIds().get(position));
-
-        PendingIntent pi = PendingIntent.getActivity(AddNotas.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-        notification.setContentIntent(pi);
-
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         nm.notify(id, notification.build());
     }
