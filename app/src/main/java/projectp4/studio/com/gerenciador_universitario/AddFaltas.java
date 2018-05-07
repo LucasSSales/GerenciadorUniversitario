@@ -93,22 +93,7 @@ public class AddFaltas extends AppCompatActivity {
                                 notificar(st, posMat);
 
                             banco.execSQL("UPDATE materias SET nivelDeFaltas='"+ st +"' WHERE id=" + idb.getIds().get(posMat));
-                            //Toast.makeText(AddFaltas.this, "Status: "+idb.getConceitos().get(posMat), Toast.LENGTH_SHORT).show();
-                            /*
-                                String prevStatus = s.calcStatus(Integer.parseInt(idb.getFaltasA().get(position)), Integer.parseInt(idb.getFaltasMax().get(position)));
-                                updateFaltas(idb.getIds().get(position), idb.getFaltasA().get(position));
-                                String newStatus = s.calcStatus(Integer.parseInt(idb.getFaltasA().get(position)), Integer.parseInt(idb.getFaltasMax().get(position)));
 
-                                if(!prevStatus.equals(newStatus)){
-                                    int nvl = (int)((Integer.parseInt(idb.getFaltasA().get(position))*100)/Integer.parseInt(idb.getFaltasMax().get(position)));
-                                    if (nvl >= 50 && nvl < 80){
-                                        notificar("Perigoso", position);
-                                    }else if (nvl >= 80 && nvl <= 100){
-                                        notificar("CRÍTICO", position);
-                                    }else if(nvl > 100){
-                                        notificar("ULTRAPASSADO", position);
-                                    }
-                                }*/
                             }
                     });
                     dialog.create();
@@ -136,14 +121,7 @@ public class AddFaltas extends AppCompatActivity {
 
         notification = new NotificationCompat.Builder(AddFaltas.this);
         notification.setAutoCancel(true);
-
-        if(status.equals("Perigoso")){
-            notification.setSmallIcon(R.drawable.notification_perigoso);
-        }else if (status.equals("CRÍTICO")){
-            notification.setSmallIcon(R.drawable.notification_critico);
-        }else{
-            notification.setSmallIcon(R.drawable.notification_limite_ultrapassado);
-        }
+        notification.setSmallIcon(R.drawable.faltas);
 
         notification.setTicker("Nível de Faltas " + status + "!");
         notification.setWhen(System.currentTimeMillis());
