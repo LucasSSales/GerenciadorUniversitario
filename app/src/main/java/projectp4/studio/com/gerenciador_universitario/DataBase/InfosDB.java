@@ -138,31 +138,6 @@ public class InfosDB extends Activity {
         }
     }
 
-/*
-    public ArrayList<String> getDados (int position){
-        ArrayList<String> extra = new ArrayList<String>();
-        extra.add(mat.get(position));
-        extra.add(faltasA.get(position));
-        extra.add(faltasMax.get(position));
-        extra.add(ab1.get(position));
-        extra.add(ab2.get(position));
-        extra.add(reav.get(position));
-        extra.add(provaFinal.get(position));
-        extra.add(mediaFinal.get(position));
-        return extra;
-    }*/
-
-    public void updateFaltas (SQLiteDatabase banco, int f, ListView listaMat, Integer id){
-        try{
-            banco.execSQL("UPDATE materias SET faltas="+ f +" WHERE id=" + id);
-            Toast.makeText(context, "Falta adicionada!", Toast.LENGTH_LONG).show();
-            recuperarInfoList(banco, listaMat);
-
-        }catch(Exception e){
-            e.printStackTrace();;
-        }
-    }
-
     public SQLiteDatabase pegarBanco (String nome, Context context){
         SQLiteDatabase banco = context.openOrCreateDatabase(nome, Context.MODE_PRIVATE, null);
         banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, " +
@@ -174,7 +149,7 @@ public class InfosDB extends Activity {
     public void removerMateria(SQLiteDatabase banco, Context c, Integer id){
         try{
             banco.execSQL("DELETE FROM materias WHERE id=" + id);
-            Toast.makeText(c, "Materia Excluida", Toast.LENGTH_LONG).show();
+            Toast.makeText(c, "Materia Excluida!", Toast.LENGTH_LONG).show();
         }catch(Exception e){
             Toast.makeText(c, e.toString(),  Toast.LENGTH_LONG).show();
             e.printStackTrace();

@@ -28,20 +28,21 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Compartilhar"
+            android:text="Compartilhar em TDN"
             android:id="@+id/share"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Ajude a divulgar esse app compartilhando que você o está utilizando"
+            android:text="Ajude a divulgar esse app "
             android:id="@+id/textView"
+            android:padding="10dp"
             android:layout_below="@+id/textView8"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 </FrameLayout>

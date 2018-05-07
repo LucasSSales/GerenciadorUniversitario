@@ -67,7 +67,7 @@ public class FragmentConfig extends Fragment {
                         String imgURL =  "";
                         try {
                             encoded= URLEncoder.encode("Estou usando o Gerenciador Universitário!", "utf-8").replace("+", "%20");
-                            imgURL = URLEncoder.encode("https://www.santanderuniversidades.com.br/projetos-especiais/PublishingImages/Paginas/app-universitario/bolsas-card.svg", "utf-8");
+                            imgURL = URLEncoder.encode("https://orig00.deviantart.net/5fe5/f/2018/126/4/b/ic_launcher_by_lucsales-dcauvqk.pngs", "utf-8");
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://the-dank-network.herokuapp.com/post?content=" + encoded+
                             "&imageUrl="+imgURL)));
                         } catch (UnsupportedEncodingException e) {

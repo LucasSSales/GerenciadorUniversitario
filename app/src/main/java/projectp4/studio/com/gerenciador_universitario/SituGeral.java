@@ -82,8 +82,8 @@ public class SituGeral extends AppCompatActivity {
             ab1tv.setText("AB1: " + ab1);
             ab2tv.setText("AB2: " + ab2);
             finaltv.setText("Final: " + pfinal);
-            faltasA.setText("Faltas Atuais: "+fa);
-            faltasR.setText("Faltas Restantes: " + fr);
+            faltasA.setText("Atuais: "+fa);
+            faltasR.setText("Restantes: " + fr);
             cargaH.setText("Carga Horária: " + ch +"h");
             media.setText("Média: " + m);
             conceito.setText("Conceito: " + c);

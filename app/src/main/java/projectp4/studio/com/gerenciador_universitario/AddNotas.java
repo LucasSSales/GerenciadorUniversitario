@@ -48,11 +48,12 @@ public class AddNotas extends AppCompatActivity {
         add = (Button) findViewById(R.id.btadd);
         idb = new InfosDB(AddNotas.this);
 
+
         try {
             banco = openOrCreateDatabase("Gerenciador_universitario", MODE_PRIVATE, null);
 
             banco.execSQL("CREATE TABLE IF NOT EXISTS materias (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE, conceito VARCHAR, nivelDeFaltas VARCHAR)");
-
+            idb.recuperarInfo(banco);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, idb.recuperarInfo(banco));
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             materias.setAdapter(adapter);
@@ -92,7 +93,6 @@ public class AddNotas extends AppCompatActivity {
                         Toast.makeText(AddNotas.this, "Digite uma nota!", Toast.LENGTH_LONG).show();
                     }else{
                         Double n = Double.parseDouble(nota.getText().toString());
-                        boolean f = false;
 
                         if(n > 10 || n < 0){
                             Toast.makeText(AddNotas.this, "Notas de 0 a 10 apenas!", Toast.LENGTH_LONG).show();
@@ -109,8 +109,7 @@ public class AddNotas extends AppCompatActivity {
                                     banco.execSQL("UPDATE materias SET reav="+ n +" WHERE id=" + id);
                                     break;
                                 case 3:
-                                    banco.execSQL("UPDATE materias SET provaFinal="+ n +" WHERE id=" + id);
-                                    f = true;
+                                    banco.execSQL("UPDATE conceito SET provaFinal="+ n +" WHERE id=" + id);
                                     break;
                             }
 
@@ -123,15 +122,14 @@ public class AddNotas extends AppCompatActivity {
                             notas.add(idb.getReav().get(idb.getIds().indexOf(id)));
                             notas.add(idb.getProvaFinal().get(idb.getIds().indexOf(id)));
 
-                            banco.execSQL("UPDATE materias SET mediaFinal="+ c.media(posAv, notas) +" WHERE id=" + id);
+                            String con = c.conceito(c.media(posAv, notas), posAv);
+
                             Toast.makeText(AddNotas.this, "Nota adicionada!", Toast.LENGTH_LONG).show();
 
-                            String con = c.conceito(c.media(posAv, notas), posAv);//MUDAR
-                            String excon = idb.getConceitos().get(idb.getIds().indexOf(id));
+                            banco.execSQL("UPDATE materias SET mediaFinal="+ c.media(posAv, notas) +" WHERE id=" + id);
+                            banco.execSQL("UPDATE materias SET conceito='"+ con +"' WHERE id=" + id);
 
-                            banco.execSQL("UPDATE materias SET mediaFinal='"+ con +"' WHERE id=" + id);
-
-                            if(!excon.equals(con)){
+                            if(!idb.getConceitos().get(idb.getIds().indexOf(id)).equals(con)){
                                 notificar(con, idb.getIds().indexOf(id));
                             }
 
@@ -154,7 +152,7 @@ public class AddNotas extends AppCompatActivity {
 
         notification = new NotificationCompat.Builder(AddNotas.this);
         notification.setAutoCancel(true);
-        notification.setSmallIcon(R.drawable.notification_limite_ultrapassado);
+
 
         String msg = "";
         String msg2= "";
@@ -162,9 +160,11 @@ public class AddNotas extends AppCompatActivity {
         if(status.equals("Aprovado")){
             msg = "PARABÉNS! Você está APROVADO!";
             msg2 = "Continue assim e logo se formará!";
+            notification.setSmallIcon(R.drawable.aprovado);
         }else if(status.equals("Reprovado")){
             msg = "QUE PENA! Você está Reprovado";
             msg2 = "Não desanime, continue tentando!";
+            notification.setSmallIcon(R.drawable.reprovado);
         }
 
         notification.setTicker(msg);
