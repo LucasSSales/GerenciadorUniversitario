@@ -1,8 +1,15 @@
 package projectp4.studio.com.gerenciador_universitario;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +35,7 @@ public class AddNotas extends AppCompatActivity {
     private int posMat;
     private Integer id;
     private Calculos c = new Calculos(AddNotas.this);
+    private NotificationCompat.Builder notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,16 +124,17 @@ public class AddNotas extends AppCompatActivity {
                             notas.add(idb.getProvaFinal().get(idb.getIds().indexOf(id)));
 
                             banco.execSQL("UPDATE materias SET mediaFinal="+ c.media(posAv, notas) +" WHERE id=" + id);
-                            /*
-                            String con = c.conceito(c.media(posAv, notas), posAv, true);//MUDAR
-
-                            banco.execSQL("UPDATE materias SET conceito='"+ con +"' WHERE id=" + id);
-
-                            idb.recuperarInfo(banco);
-                            Toast.makeText(AddNotas.this, "conceito: "+idb.getConceitos().get(idb.getIds().indexOf(id)), Toast.LENGTH_SHORT).show();
-
                             Toast.makeText(AddNotas.this, "Nota adicionada!", Toast.LENGTH_LONG).show();
-                            //finish();*/
+
+                            String con = c.conceito(c.media(posAv, notas), posAv);//MUDAR
+                            String excon = idb.getConceitos().get(idb.getIds().indexOf(id));
+
+                            banco.execSQL("UPDATE materias SET mediaFinal='"+ con +"' WHERE id=" + id);
+
+                            if(!excon.equals(con)){
+                                notificar(con, idb.getIds().indexOf(id));
+                            }
+
                         }
                     }
 
@@ -139,5 +148,46 @@ public class AddNotas extends AppCompatActivity {
 
 
 
+    }
+
+    public void notificar(String status, int position){
+
+        notification = new NotificationCompat.Builder(AddNotas.this);
+        notification.setAutoCancel(true);
+        notification.setSmallIcon(R.drawable.notification_limite_ultrapassado);
+
+        String msg = "";
+        String msg2= "";
+
+        if(status.equals("Aprovado")){
+            msg = "PARABÉNS! Você está APROVADO!";
+            msg2 = "Continue assim e logo se formará!";
+        }else if(status.equals("Reprovado")){
+            msg = "QUE PENA! Você está Reprovado";
+            msg2 = "Não desanime, continue tentando!";
+        }
+
+        notification.setTicker(msg);
+        notification.setWhen(System.currentTimeMillis());
+        notification.setContentTitle(msg);
+        notification.setContentText(msg2);
+        int id = (int) System.currentTimeMillis();
+        notification.setVibrate(new long[] {150, 800});
+
+        try{
+            Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone toque = RingtoneManager.getRingtone(AddNotas.this, som);
+            toque.play();
+        }catch(Exception e){}
+
+
+        Intent i = new Intent(AddNotas.this, SituGeral.class);
+        i.putExtra("ID", idb.getIds().get(position));
+
+        PendingIntent pi = PendingIntent.getActivity(AddNotas.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        notification.setContentIntent(pi);
+
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        nm.notify(id, notification.build());
     }
 }

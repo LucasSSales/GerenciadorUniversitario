@@ -58,26 +58,17 @@ public class Calculos extends Activity{
         }
     }
 
-    public String conceito (double media, int av, boolean cb){
+    public String conceito (double media, int av){
 
-        String saida="Matriculado";
-        if(media >= 7){
-            Toast.makeText(Calculos.this, "maior q 7", Toast.LENGTH_SHORT).show();
-            saida = "Aprovado";
-        }else if (media >= 5.5 && av==3){
-            Toast.makeText(Calculos.this, "mais q 5.5 na final", Toast.LENGTH_SHORT).show();
-            saida = "Aprovado";
-        }else if( (media < 5 && av > 0) || (media < 5.5 && av==3)){
-            Toast.makeText(Calculos.this, "menos q 5 ou  menos 1 5.5 na final", Toast.LENGTH_SHORT).show();
-            saida = "Reprovado";
+        if(media >= 7) return  "Aprovado";
+        if(media < 5 && av > 0) return "Reprovado";
+
+        if(av==3){
+            if(media >= 5.5) return"Aprovado";
+            else return"Reprovado";
+        }else{
+            return "Matriculado";
         }
-
-        /*if(cb){
-
-        }*/
-
-        return saida;
-
     }
 
 

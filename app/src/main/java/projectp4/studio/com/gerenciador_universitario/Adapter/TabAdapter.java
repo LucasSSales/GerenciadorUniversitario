@@ -15,7 +15,7 @@ import projectp4.studio.com.gerenciador_universitario.FragmentNotas;
  * Created by Lucas on 01/05/2018.
  */
 public class TabAdapter extends FragmentStatePagerAdapter {
-    private String[] tituloAbas ={"LISTA", "NOTAS", "FALTAS", "CONFIG."};
+    private String[] tituloAbas ={"LISTA", "NOTAS", "FALTAS", "SHARE"};
     private Bundle bundle;
 
     public TabAdapter(FragmentManager fm, Bundle bundle) {

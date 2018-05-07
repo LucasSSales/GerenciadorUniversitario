@@ -169,19 +169,6 @@ public class InfosDB extends Activity {
                 "cargaHoraria INT(2), maxFaltas INT(2), faltas INT(2), ab1 DOUBLE, ab2 DOUBLE, " +
                 "reav DOUBLE, provaFinal DOUBLE, mediaFinal DOUBLE)");
         return banco;
-<<<<<<< HEAD
-=======
-    }
-
-    public void removerMateria(SQLiteDatabase banco, Context c, Integer id){
-        try{
-            banco.execSQL("DELETE FROM materias WHERE id=" + id);
-            Toast.makeText(c, "Materia Excluida", Toast.LENGTH_LONG).show();
-        }catch(Exception e){
-            Toast.makeText(c, e.toString(),  Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
->>>>>>> cc7af0a1e89a1837a7db06bb09f6514428d9d240
     }
 
     public void removerMateria(SQLiteDatabase banco, Context c, Integer id){
